@@ -1,0 +1,23 @@
+{
+  "name": "layered-text",
+  "version": "0.0.2",
+  "description": "layered text tool",
+  "main": "layered-text.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "layered",
+    "text"
+  ],
+  "author": "fwg",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adf0001/layered-text.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adf0001/layered-text/issues"
+  },
+  "homepage": "https://github.com/adf0001/layered-text#readme"
+}
