@@ -274,6 +274,10 @@ var parse = function (str, mode, duplicate) {
 	return format((typeof str === "string") ? JSON.parse(str) : str, mode, duplicate);
 }
 
+var isNormalized = function (layeredText) {
+	return layeredText && (layeredText instanceof Array) && layeredText.mode === MODE_NORMALIZE;
+}
+
 var setNormalizedFlag = function (normalizedLayeredText) {
 	if (normalizedLayeredText.mode === MODE_NORMALIZE) return;
 
@@ -434,6 +438,7 @@ exports.parse = parse;
 exports.normalize = normalize;
 exports.compact = compact;
 
+exports.isNormalized = isNormalized;
 exports.setNormalizedFlag = setNormalizedFlag;
 
 exports.addByIndex = addByIndex;

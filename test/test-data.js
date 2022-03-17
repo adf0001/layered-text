@@ -359,6 +359,24 @@ module.exports = {
 		));
 	},
 
+	".isNormalized()": function (done) {
+		var lt = ["aaa", 0, 0, "bbb", 0, ["ccc", 0, 0]];
+
+		layered_text.setNormalizedFlag(lt);
+
+		done(!(
+			layered_text.isNormalized(lt) &&
+			layered_text.isNormalized(lt[5]) &&
+			!layered_text.isNormalized(["aaa", 0, 0]) &&
+			!layered_text.isNormalized(null) &&
+			!layered_text.isNormalized("") &&
+			!layered_text.isNormalized(0) &&
+			!layered_text.isNormalized() &&
+
+			true
+		));
+	},
+
 };
 
 // for html page
