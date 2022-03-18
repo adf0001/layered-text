@@ -222,6 +222,8 @@ module.exports = {
 
 	"entry": function (done) {
 
+		var lt = layered_text.normalize(["a", { b: 1 }, ["c"]]);
+
 		done(!(
 			/*
 			*/
@@ -235,6 +237,14 @@ module.exports = {
 			cmp_json(layered_text.compact('["abc"]'), ['["abc"]']) &&
 			cmp_json(layered_text.normalize('["abc"]'), ['["abc"]', 0, 0]) &&
 			cmp_json(layered_text.parse('["abc"]'), ["abc"]) &&
+
+			cmp_json(lt[layered_text.INDEX_N_TEXT], "a") &&
+			cmp_json(lt[layered_text.INDEX_N_PROP], { b: 1 }) &&
+			cmp_json(lt[layered_text.INDEX_N_SUB], ["c", 0, 0]) &&
+
+			layered_text.INDEX_N_TEXT === 0 &&
+			layered_text.INDEX_N_PROPERTY === layered_text.INDEX_N_PROP &&
+			layered_text.INDEX_N_SUBORDINATE === layered_text.INDEX_N_SUB &&
 
 			true
 		));

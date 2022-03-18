@@ -84,6 +84,11 @@ var MODE_NORMALIZE = 1;
 
 var NORMALIZE_GROUP_COUNT = 3;
 
+//normalized index
+var INDEX_N_TEXT = 0;
+var INDEX_N_PROPERTY = 1;
+var INDEX_N_SUBORDINATE = 2;
+
 /*
 layeredText: Array
 mode: 0: compact, 1: normalize
@@ -431,6 +436,12 @@ exports.MODE_NORMALIZE = MODE_NORMALIZE;
 exports.MODE_COMPACT = MODE_COMPACT;
 
 exports.NORMALIZE_GROUP_COUNT = NORMALIZE_GROUP_COUNT;
+
+exports.INDEX_N_TEXT = INDEX_N_TEXT;
+exports.INDEX_N_PROPERTY = INDEX_N_PROPERTY;
+exports.INDEX_N_PROP = INDEX_N_PROPERTY;
+exports.INDEX_N_SUBORDINATE = INDEX_N_SUBORDINATE;
+exports.INDEX_N_SUB = INDEX_N_SUBORDINATE;
 
 exports.format = format;
 exports.parse = parse;
