@@ -141,7 +141,7 @@ function _format(layeredText, mode, duplicate) {
 				layeredText.splice(
 					j, (i - j),
 					(prop && _isNotEmpty(prop)) ? prop : 0,
-					(sub && sub.length) ? _format(sub, mode, duplicate && "sub") : 0
+					sub ? _format(sub, mode, duplicate && "sub") : 0	//keep original empty sub in normalize mode
 				);
 				j += NORMALIZE_GROUP_COUNT;
 			}
@@ -192,7 +192,7 @@ function _format(layeredText, mode, duplicate) {
 			if (sub) {
 				if (li.length) sub.push.apply(sub, li);
 			}
-			else sub = duplicate ? li.concat() : li;
+			else sub = duplicate ? li.concat() : li;	//duplicate empty sub, to keep same result with not-duplicating
 		}
 		else if (ts === "object") {
 			//property
@@ -221,7 +221,7 @@ function _format(layeredText, mode, duplicate) {
 		layeredText.splice(
 			j, (i - j),
 			(prop && _isNotEmpty(prop)) ? prop : 0,
-			(sub && sub.length) ? _format(sub, mode, duplicate && "sub") : 0
+			sub ? _format(sub, mode, duplicate && "sub") : 0	//keep original empty sub in normalize mode
 		);
 	}
 	else {	//MODE_COMPACT

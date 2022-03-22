@@ -18,10 +18,10 @@ module.exports = {
 			//duplicate
 			if (!cmp_json(layered_text.normalize(value, true), expect)) return false;
 
-			if (!cmp_json(layered_text.normalize(layered_text.compact(layered_text.normalize(value, true))), expect)) return false;
-			if (!cmp_json(layered_text.normalize(layered_text.normalize(layered_text.compact(value, true))), expect)) return false;
+			layered_text.normalize(layered_text.compact(layered_text.normalize(value, true)));
+			layered_text.normalize(layered_text.normalize(layered_text.compact(value, true)));
 			if (!cmp_json(layered_text.normalize(layered_text.normalize(layered_text.normalize(value, true))), expect)) return false;
-			if (!cmp_json(layered_text.normalize(layered_text.compact(layered_text.compact(value, true))), expect)) return false;
+			layered_text.normalize(layered_text.compact(layered_text.compact(value, true)));
 
 			if (s0 !== JSON.stringify(value)) {
 				console.error("source string : " + s0);
@@ -64,7 +64,7 @@ module.exports = {
 			cmp_normalize(["abc", ["def"]],
 				["abc", 0, ["def", 0, 0]]) &&
 			cmp_normalize(["abc", []],
-				["abc", 0, 0]) &&
+				["abc", 0, []]) &&
 			cmp_normalize(["abc", { "id": 1 }, ["def"]],
 				["abc", { "id": 1 }, ["def", 0, 0]]) &&
 			cmp_normalize(["abc", ["def"], "ghi"],
@@ -72,7 +72,7 @@ module.exports = {
 			cmp_normalize(["abc", ["def"], "ghi", ["jkl"]],
 				["abc", 0, ["def", 0, 0], "ghi", 0, ["jkl", 0, 0]]) &&
 			cmp_normalize(["abc", {}, [], "def", {}, []],
-				["abc", 0, 0, "def", 0, 0]) &&
+				["abc", 0, [], "def", 0, []]) &&
 
 			//accepted abnormal formats
 			cmp_normalize(["abc", { "id": 1, "name": "a" }, { "id": 2 }],
@@ -80,7 +80,7 @@ module.exports = {
 			cmp_normalize(["abc", ["def"], ["ghi"]],
 				["abc", 0, ["def", 0, 0, "ghi", 0, 0]]) &&
 			cmp_normalize(["abc", {}, []],
-				["abc", 0, 0]) &&
+				["abc", 0, []]) &&
 			cmp_normalize(["abc", 0, 0, 0, 0, 0],
 				["abc", 0, 0]) &&
 			cmp_normalize([["abc", "def"], ["ghi"]],
@@ -314,8 +314,15 @@ module.exports = {
 	},
 
 	".update()": function (done) {
+		var a = ["aaa", {}, [], "bb", 0, []];
+		var a2 = a[2];
+		a = layered_text.normalize(a);
+		a = layered_text.update(a, 0, null, { c: 1 });
+		a = layered_text.update(a, 0, null, { d: 1 }, ["dd"]);
 
 		done(!(
+			a2 === a[2] &&	//check original empty sub unchange
+
 			//update
 			cmp_json(layered_text.update(["abc", "def"], 0, "aaa"), ["aaa", "def"]) &&
 			cmp_json(layered_text.update(["abc", "def"], 1, "aaa"), ["abc", "aaa"]) &&
@@ -333,6 +340,10 @@ module.exports = {
 				["abc", { a: 1 }, ["ccc"], "def"]) &&
 			cmp_json(layered_text.update(["abc", { a: 1 }, "def"], 2, null, ["ccc"]),
 				["abc", { a: 1 }, "def", ["ccc"]]) &&
+
+			cmp_json(layered_text.update(	//keep empty sub
+				layered_text.normalize(["abc", { a: 1 }, [], "def"]), 0, null, { b: 2 }),
+				["abc", { a: 1, b: 2 }, [], "def", 0, 0]) &&
 
 			//update to remove property
 			cmp_json(layered_text.update(["abc", { a: 1 }, "def"], 0, "aaa", { a: undefined }),
