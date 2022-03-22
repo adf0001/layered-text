@@ -359,6 +359,11 @@ module.exports = {
 			cmp_json(layered_text.update(["abc", ["bbb"], "def"], 0, null, ["ccc"]),
 				["abc", ["bbb", "ccc"], "def"]) &&
 
+			//update normalized with sub
+			cmp_json(layered_text.update(layered_text.normalize(["aaa", ["b"]]), 0, null, ["c"]),
+				["aaa", 0, ["b", 0, 0, "c", 0, 0]]) &&
+
+
 			//whole item replacing
 			cmp_json(layered_text.update(["abc", { a: 1 }, ["ccc"], "def"], 0, ["aaa"], { b: 2 }),
 				["aaa", { b: 2 }, "def"]) &&

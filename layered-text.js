@@ -190,7 +190,10 @@ function _format(layeredText, mode, duplicate) {
 		else if (li instanceof Array) {
 			//sub
 			if (sub) {
-				if (li.length) sub.push.apply(sub, li);
+				if (li.length) {
+					sub.push.apply(sub, li);
+					if ("mode" in sub) delete sub.mode;
+				}
 			}
 			else sub = duplicate ? li.concat() : li;	//duplicate empty sub, to keep same result with not-duplicating
 		}
