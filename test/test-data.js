@@ -405,22 +405,46 @@ module.exports = {
 		));
 	},
 
-	".isEmptyPart()": function (done) {
+	".isEmptyProp()": function (done) {
 		done(!(
 			//.isEmptyPart(propertyOrSubordinate)
-			layered_text.isEmptyPart(0) &&
-			layered_text.isEmptyPart(null) &&
-			layered_text.isEmptyPart({}) &&
-			layered_text.isEmptyPart({ a: undefined }) &&
-			layered_text.isEmptyPart([]) &&
-			layered_text.isEmptyPart(true) &&
-			layered_text.isEmptyPart(false) &&
-			layered_text.isEmptyPart(123) &&
-			layered_text.isEmptyPart("abc") &&
+			layered_text.isEmptyProp(0) &&
+			layered_text.isEmptyProp(null) &&
+			layered_text.isEmptyProp({}) &&
+			layered_text.isEmptyProp({ a: undefined }) &&
+			layered_text.isEmptyProp([]) &&
+			layered_text.isEmptyProp(true) &&
+			layered_text.isEmptyProp(false) &&
+			layered_text.isEmptyProp(123) &&
+			layered_text.isEmptyProp("abc") &&
+			layered_text.isEmptyProp(["abc"]) &&
 
-			!layered_text.isEmptyPart({ a: 0 }) &&
-			!layered_text.isEmptyPart({ a: null }) &&
-			!layered_text.isEmptyPart([0]) &&
+			!layered_text.isEmptyProp({ a: 0 }) &&
+			!layered_text.isEmptyProp({ a: null }) &&
+
+			true
+		));
+	},
+
+	".isEmptySub()": function (done) {
+		done(!(
+			//.isEmptyPart(propertyOrSubordinate)
+			layered_text.isEmptySub(0) &&
+			layered_text.isEmptySub(null) &&
+			layered_text.isEmptySub({}) &&
+			layered_text.isEmptySub({ a: undefined }) &&
+			layered_text.isEmptySub([]) &&
+			layered_text.isEmptySub(true) &&
+			layered_text.isEmptySub(false) &&
+			layered_text.isEmptySub(123) &&
+			layered_text.isEmptySub("abc") &&
+
+			layered_text.isEmptySub({ a: 123 }) &&
+			layered_text.isEmptySub({ a: "abc" }) &&
+
+			!layered_text.isEmptySub([0]) &&
+			!layered_text.isEmptySub([,]) &&	//length=1
+			!layered_text.isEmptySub([, ,]) &&
 
 			true
 		));

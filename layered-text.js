@@ -433,12 +433,14 @@ var update = function (layeredText, indexOrGroupIndex, text, property, sub) {
 
 //tool
 
-var isEmptyPart = function (propertyOrSubordinate) {
-	if (!propertyOrSubordinate) return true;
+var isEmptyProp = function (property) {
+	return !property || (typeof property !== "object")
+		|| (property instanceof Array)	//do not accept array
+		|| _isEmpty(property);
+}
 
-	if (propertyOrSubordinate instanceof Array) return !(propertyOrSubordinate.length > 0);	//sub
-
-	return (typeof propertyOrSubordinate !== "object") || _isEmpty(propertyOrSubordinate);	//property
+var isEmptySub = function (subordinate) {
+	return !subordinate || !(subordinate instanceof Array) || !(subordinate.length > 0);
 }
 
 //module
@@ -472,4 +474,5 @@ exports.remove = remove;
 exports.updateByIndex = updateByIndex;
 exports.update = update;
 
-exports.isEmptyPart = isEmptyPart;
+exports.isEmptyProp = isEmptyProp;
+exports.isEmptySub = isEmptySub;
