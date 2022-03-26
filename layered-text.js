@@ -431,6 +431,16 @@ var update = function (layeredText, indexOrGroupIndex, text, property, sub) {
 	return updateByIndex.apply(this, arg);
 }
 
+//tool
+
+var isEmptyPart = function (propertyOrSubordinate) {
+	if (!propertyOrSubordinate) return true;
+
+	if (propertyOrSubordinate instanceof Array) return !(propertyOrSubordinate.length > 0);	//sub
+
+	return (typeof propertyOrSubordinate !== "object") || _isEmpty(propertyOrSubordinate);	//property
+}
+
 //module
 
 module.exports = exports = parse;
@@ -461,3 +471,5 @@ exports.removeByIndex = removeByIndex;
 exports.remove = remove;
 exports.updateByIndex = updateByIndex;
 exports.update = update;
+
+exports.isEmptyPart = isEmptyPart;

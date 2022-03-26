@@ -375,6 +375,7 @@ module.exports = {
 	".setNormalizedFlag()": function (done) {
 		var lt = ["aaa", 0, 0, "bbb", 0, ["ccc", 0, 0]];
 
+		//.setNormalizedFlag(normalizedLayeredText)
 		layered_text.setNormalizedFlag(lt);
 
 		done(!(
@@ -391,6 +392,7 @@ module.exports = {
 		layered_text.setNormalizedFlag(lt);
 
 		done(!(
+			//.isNormalized(layeredText)
 			layered_text.isNormalized(lt) &&
 			layered_text.isNormalized(lt[5]) &&
 			!layered_text.isNormalized(["aaa", 0, 0]) &&
@@ -398,6 +400,27 @@ module.exports = {
 			!layered_text.isNormalized("") &&
 			!layered_text.isNormalized(0) &&
 			!layered_text.isNormalized() &&
+
+			true
+		));
+	},
+
+	".isEmptyPart()": function (done) {
+		done(!(
+			//.isEmptyPart(propertyOrSubordinate)
+			layered_text.isEmptyPart(0) &&
+			layered_text.isEmptyPart(null) &&
+			layered_text.isEmptyPart({}) &&
+			layered_text.isEmptyPart({ a: undefined }) &&
+			layered_text.isEmptyPart([]) &&
+			layered_text.isEmptyPart(true) &&
+			layered_text.isEmptyPart(false) &&
+			layered_text.isEmptyPart(123) &&
+			layered_text.isEmptyPart("abc") &&
+
+			!layered_text.isEmptyPart({ a: 0 }) &&
+			!layered_text.isEmptyPart({ a: null }) &&
+			!layered_text.isEmptyPart([0]) &&
 
 			true
 		));

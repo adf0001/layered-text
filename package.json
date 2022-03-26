@@ -1,6 +1,6 @@
 {
   "name": "layered-text",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "layered text tool",
   "main": "layered-text.js",
   "scripts": {
