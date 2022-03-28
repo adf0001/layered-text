@@ -373,6 +373,19 @@ module.exports = {
 			cmp_json(layered_text.update(["abc", { a: 1 }, ["ccc"], "def"], 0, ["aaa"], { b: 2 }),
 				["aaa", { b: 2 }, "def"]) &&
 
+			//remove all property and sub by `false`
+			cmp_json(layered_text.update(["abc", { a: 1 }, ["ccc"], "def"], 0, null, false),
+				["abc", ["ccc"], "def"]) &&
+			cmp_json(layered_text.update(["abc", { a: 1 }, ["ccc"], "def"], 0, null, null, false),
+				["abc", { a: 1 }, "def"]) &&
+			cmp_json(layered_text.update(["abc", { a: 1 }, ["ccc"], "def"], 0, null, false, false),
+				["abc", "def"]) &&
+			cmp_json(layered_text.update(["abc", "def"], 0, null, false, false),
+				["abc", "def"]) &&
+			cmp_json(layered_text.update(layered_text.normalize(["abc", { a: 1 }, ["ccc"], "def"]), 0, null, false, false),
+				["abc", 0, 0, "def", 0, 0]) &&
+
+
 			true
 		));
 	},

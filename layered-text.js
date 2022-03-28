@@ -406,6 +406,8 @@ var remove = function (layeredText, indexOrGroupIndex, removeProperty, removeSub
 update text, property or subordinate
 	index: 0-N
 	text: if the `text` is an array, the whole item will be replaced
+	property: set `false` to remove all properties
+	sub: set `false` to remove all subs
 */
 var updateByIndex = function (layeredText, index, text, property, sub) {
 	//index
@@ -427,11 +429,15 @@ var updateByIndex = function (layeredText, index, text, property, sub) {
 	}
 
 	var a = layeredText.splice(index, i - index);
-	if (text) a[0] = text;
-	if (arguments.length > 3) a.push.apply(a, Array.prototype.slice.call(arguments, 3));
+	//text
+	if (typeof text === "string") a[0] = text;
+
+	//property and sub
+	if (property === false || sub === false) { a = normalize(a); }
+	(property === false) ? (a[INDEX_N_PROPERTY] = 0) : a.push(property);
+	(sub === false) ? (a[INDEX_N_SUBORDINATE] = 0) : a.push(sub);
 
 	a.unshift(layeredText, index);
-
 	return addByIndex.apply(this, a);
 }
 
