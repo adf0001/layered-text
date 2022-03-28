@@ -302,11 +302,16 @@ module.exports = {
 				["abc", 0, "def", 0]) &&
 			cmp_json(layered_text.remove(["abc", 0, "def", { b: 1, c: 2 }], 2, { b: null, c: null }),
 				["abc", 0, "def", 0]) &&
+			cmp_json(layered_text.remove(["abc", 0, "def", { b: 1, c: 2 }], 2, true),
+				["abc", 0, "def", 0]) &&
 
 			//remove sub
 			cmp_json(layered_text.remove(["abc", 0, "def", { b: 1 }, ["ccc"]], 2, "b"),
 				["abc", 0, "def", 0, ["ccc"]]) &&
 			cmp_json(layered_text.remove(["abc", 0, "def", { b: 1 }, ["ccc"]], 2, "b", true),
+				["abc", 0, "def", 0, 0]) &&
+
+			cmp_json(layered_text.remove(["abc", 0, "def", { b: 1 }, ["ccc"]], 2, true, true),
 				["abc", 0, "def", 0, 0]) &&
 
 			true

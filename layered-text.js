@@ -335,7 +335,7 @@ var add = function (layeredText, indexOrGroupIndex, text, property, sub) {
 /*
 remove item, or remove property or subordinate
 	index: 0-N
-	removeProperty: name array/text/object
+	removeProperty: name array/text/object/true
 	removeSubordinate: boolean
 */
 var removeByIndex = function (layeredText, index, removeProperty, removeSubordinate) {
@@ -347,6 +347,9 @@ var removeByIndex = function (layeredText, index, removeProperty, removeSubordin
 	//removeProperty
 	if (typeof removeProperty === "string") {
 		removeProperty = [removeProperty];
+	}
+	else if (removeProperty === true) {
+		removeProperty = "*";	//remove all properties flag
 	}
 	else if (removeProperty && !(removeProperty instanceof Array)) {
 		removeProperty = Object.keys(removeProperty);
@@ -364,17 +367,26 @@ var removeByIndex = function (layeredText, index, removeProperty, removeSubordin
 
 		if (!li) continue;
 
+		//sub
 		if (li instanceof Array) {
 			if (removeSubordinate) layeredText[i] = 0;
+			continue;
 		}
-		else {
-			if (removeProperty) {
-				for (j = 0; j < jmax; j++) {
-					if (removeProperty[j] in li) delete li[removeProperty[j]];
-				}
-				if (_isEmpty(li)) layeredText[i] = 0;
-			}
+
+		//property
+		if (!removeProperty) continue;
+
+		//remove all properties
+		if (removeProperty === "*") {
+			layeredText[i] = 0;
+			continue;
 		}
+
+		//remove properties by key set
+		for (j = 0; j < jmax; j++) {
+			if (removeProperty[j] in li) delete li[removeProperty[j]];
+		}
+		if (_isEmpty(li)) layeredText[i] = 0;
 	}
 
 	if (!removeProperty && !removeSubordinate) layeredText.splice(index, i - index);
