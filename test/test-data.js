@@ -468,6 +468,35 @@ module.exports = {
 		));
 	},
 
+	"duplicate": function (done) {
+		var a = ["aaa", 0, ["bbb", 0, 0]];
+		var a2 = layered_text.normalize(a);
+		var a3 = layered_text.normalize(a2);
+		var a4 = layered_text.normalize(a2, true);
+
+		var b = ["ccc", ["ddd"]];
+		var b2 = layered_text.compact(b);
+		var b3 = layered_text.compact(b2);
+		var b4 = layered_text.compact(b2, true);
+
+
+		done(!(
+			a === a2 && a[2] === a2[2] &&
+			a2 === a3 && a2[2] === a3[2] &&
+
+			cmp_json(a2, a4) && cmp_json(a2[2], a4[2]) && cmp_json(a2[2], ["bbb", 0, 0]) &&
+			a2 !== a4 && a2[2] !== a4[2] &&
+
+			b === b2 && b[1] === b2[1] &&
+			b2 === b3 && b2[1] === b3[1] &&
+
+			cmp_json(b2, b4) && cmp_json(b2[1], b4[1]) && cmp_json(b2[1], ["ddd"]) &&
+			b2 !== b4 && b2[1] !== b4[1] &&
+
+			true
+		));
+	},
+
 };
 
 // for html page
