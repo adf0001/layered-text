@@ -473,12 +473,13 @@ module.exports = {
 		var a2 = layered_text.normalize(a);
 		var a3 = layered_text.normalize(a2);
 		var a4 = layered_text.normalize(a2, true);
+		var a5 = layered_text.duplicate(a2, layered_text.MODE_NORMALIZE);
 
 		var b = ["ccc", ["ddd"]];
 		var b2 = layered_text.compact(b);
 		var b3 = layered_text.compact(b2);
 		var b4 = layered_text.compact(b2, true);
-
+		var b5 = layered_text.duplicate(b2);	//default layered_text.MODE_COMPACT
 
 		done(!(
 			a === a2 && a[2] === a2[2] &&
@@ -486,12 +487,16 @@ module.exports = {
 
 			cmp_json(a2, a4) && cmp_json(a2[2], a4[2]) && cmp_json(a2[2], ["bbb", 0, 0]) &&
 			a2 !== a4 && a2[2] !== a4[2] &&
+			cmp_json(a2, a5) && cmp_json(a2[2], a5[2]) && cmp_json(a2[2], ["bbb", 0, 0]) &&
+			a2 !== a5 && a2[2] !== a5[2] &&
 
 			b === b2 && b[1] === b2[1] &&
 			b2 === b3 && b2[1] === b3[1] &&
 
 			cmp_json(b2, b4) && cmp_json(b2[1], b4[1]) && cmp_json(b2[1], ["ddd"]) &&
 			b2 !== b4 && b2[1] !== b4[1] &&
+			cmp_json(b2, b5) && cmp_json(b2[1], b5[1]) && cmp_json(b2[1], ["ddd"]) &&
+			b2 !== b5 && b2[1] !== b5[1] &&
 
 			true
 		));

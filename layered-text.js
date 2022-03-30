@@ -278,6 +278,8 @@ var format = function (layeredText, mode, duplicate) {
 var normalize = function (layeredText, duplicate) { return format(layeredText, MODE_NORMALIZE, duplicate); }
 var compact = function (layeredText, duplicate) { return format(layeredText, MODE_COMPACT, duplicate); }
 
+var duplicate = function (layeredText, mode) { return format(layeredText, mode, true); }
+
 var parse = function (str, mode, duplicate) {
 	return format((typeof str === "string") ? JSON.parse(str) : str, mode, duplicate);
 }
@@ -481,6 +483,8 @@ exports.parse = parse;
 
 exports.normalize = normalize;
 exports.compact = compact;
+
+exports.duplicate = duplicate;
 
 exports.isNormalized = isNormalized;
 exports.setNormalizedFlag = setNormalizedFlag;
