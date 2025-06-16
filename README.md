@@ -15,22 +15,17 @@ function cmp_json(value, expect) {
 	return JSON.stringify(value) === JSON.stringify(expect);
 }
 
-//.format() for object
-cmp_json(layered_text(["abc"]), ["abc"]) &&
-//parse string then .format() for string
-cmp_json(layered_text('["abc"]'), ["abc"]) &&
-
 //.format/compact/normalize/parse()
-cmp_json(layered_text.format('["abc"]'), ['["abc"]']) &&
-cmp_json(layered_text.compact('["abc"]'), ['["abc"]']) &&
-cmp_json(layered_text.normalize('["abc"]'), ['["abc"]', 0, 0]) &&
-cmp_json(layered_text.parse('["abc"]'), ["abc"])
+cmp_json(layered_text.format("abc"), ["abc"]);
+cmp_json(layered_text.compact(["abc",{},[]]), ["abc"]);
+cmp_json(layered_text.normalize(["abc"]), ["abc", 0, 0]);
+cmp_json(layered_text.parse('["abc"]'), ["abc"]);
 
 ```
 
 # Document
 ```text
-Definition of Layered-Text v0.0.4
+Definition of Layered-Text v0.0.5
 
 * Definition 
 
@@ -42,6 +37,7 @@ Definition of Layered-Text v0.0.4
 		text
 			A JSON String (refer to JSON);
 			Started with \";
+			The principle is to show the text first;
 
 		property
 			A JSON Object (refer to JSON);
@@ -82,12 +78,21 @@ Definition of Layered-Text v0.0.4
 		* multiple subordinates will be concatenated to a single subordinate;
 			["abc", ["def"], ["ghi"]] := ["abc", ["def", "ghi"]]
 
+		* properties can be after the text and before the next text or the end; or before the first text;
+			["abc", {"id": 1}, ["def"], {name: "a"}, "ghi"] := ["abc", {"id": 1, name: "a"}, ["def"], "ghi"]
+			["abc", {"id": 1}, ["def"], {name: "a"}] := ["abc", {"id": 1, name: "a"}, ["def"]]
+			[{"id": 1}, "abc"] := ["abc", {"id": 1}]
+
 		* empty property / subordinate can be 0/null/undefined;
 			["abc", {}, []] := ["abc", 0, 0] := ["abc"]
 
-		* if the 1st item of layered-text is another layered-text , the 1st item will be flattened to the main.
+		* the first subordinate before the first text will be flattened.
 			[["abc", "def"], ["ghi"]] := ["abc", "def", ["ghi"]]
 			[[["abc", "def"], ["ghi"]], "jkl"] := ["abc", "def", ["ghi"], "jkl"]
+
+		* the subordinate without text is empty;
+			[{id:1}] := []
+			[0,1,null,true] := []
 
 * Compacting process
 
